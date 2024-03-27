@@ -8,5 +8,43 @@ namespace REA_OOP_2
 {
     internal class Employee : Person
     {
+        protected int _stage; // стаж
+        protected string? _profession; // профессия
+
+        public Employee() : base() { }
+
+        public Employee(string? firstname, string? lastname, int age, bool sex, int stage, string? profession) : base(firstname, lastname, age, sex)
+        {
+            _stage = stage;
+            _profession = profession;
+        }
+
+        public int Stage
+        {
+            get => _stage;
+            set
+            {
+                if (value >= 0 && value <= 53)
+                    if (_stage > _age - 18)
+                    {
+                        _stage = _age - 18;
+                    }
+                    else
+                    {
+                        _stage = value;
+                    }
+            }
+        }
+
+        public string Profession
+        {
+            get => _profession;
+            set => _profession = value;
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() + $", Стаж: {_stage}, Професия: {_profession}";
+        }
     }
 }
