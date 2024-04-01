@@ -11,12 +11,21 @@ namespace REA_OOP_2
         protected int _stage; // стаж
         protected string? _profession; // профессия
 
-        public Employee() : base() { }
+        public Employee() : base() {
+            this.Stage = 1;
+            this.Profession = "Трудоустроенный";
+        }
+
+        public Employee(int stage, string? profession) : base()
+        {
+            this.Stage = stage;
+            this.Profession = profession;
+        }
 
         public Employee(string? firstname, string? lastname, int age, bool sex, int stage, string? profession) : base(firstname, lastname, age, sex)
         {
-            _stage = stage;
-            _profession = profession;
+            this.Stage = stage;
+            this.Profession = profession;
         }
 
         public int Stage

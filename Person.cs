@@ -7,26 +7,42 @@ using System.Threading.Tasks;
 
 namespace REA_OOP_2
 {
-    internal class Person : IComparable
+    internal class Person : IComparable, ICloneable
     {
         protected string? _firstname; // имя
         protected string? _lastname; // фамилия
         protected int _age; // возраст
         protected bool _sex; // пол; false - man; true - woman
 
+        private string[] _firstname_man = ["Дмитрий", "Олег", "Андрей", "Василий", "Пётр", "Владислав", "Иван", "Артемий", "Константин", "Даниил", "Евгений", "Александр"];
+        private string[] _lastname_man = ["Иванов", "Петров", "Сидоров", "Великий", "Любимый", "Мац", "Мотуз", "Мудряк", "Бибик", "Трусов"];
+
+        private string[] _firstname_woman = ["Ольга", "Ксения", "Ирина", "Василиса", "Екатерина", "Олеся", "Александра", "Альбина", "София", "Анастасия", "Елизавета", "Мария"];
+        private string[] _lastname_woman = ["Иванова", "Петрова", "Сидорова", "Великая", "Любимая", "Мац", "Мотуз", "Мудряк", "Бибик", "Трусова"];
+
         public Person() {
-            _firstname = "Иван";
-            _lastname = "Петров";
-            _age = 22;
-            _sex = false;
+            Random rnd = new Random();
+            this.Sex = rnd.NextDouble() > 0.5;
+            if (this.Sex)
+            {
+                this.Firstname = _firstname_woman[rnd.Next(0, _firstname_woman.Length)];
+                this.Lastname = _lastname_woman[rnd.Next(0, _lastname_woman.Length)];
+                this.Age = rnd.Next(18, 55);
+            }
+            else
+            {
+                this.Firstname = _firstname_man[rnd.Next(0, _firstname_man.Length)];
+                this.Lastname = _lastname_man[rnd.Next(0, _lastname_man.Length)];
+                this.Age = rnd.Next(18, 65);
+            }
         }
 
         public Person(string? firstname, string? lastname, int age, bool sex)
         {
-            _firstname = firstname;
-            _lastname = lastname;
-            _age = age;
-            _sex = sex;
+            this.Firstname = firstname;
+            this.Lastname = lastname;
+            this.Age = age;
+            this.Sex = sex;
         }
 
         public string Firstname
@@ -75,6 +91,16 @@ namespace REA_OOP_2
             if (this.Age > tmp.Age) { return 1; }
             if (this.Age < tmp.Age) { return -1; }
             return 0;
+        }
+
+        public object Clone()
+        {
+            return new Person("Клон " + this.Firstname, this.Lastname, this.Age, this.Sex);
+        }
+        
+        public Person ShallowCopy()
+        {
+            return (Person)this.MemberwiseClone();
         }
     }
 
